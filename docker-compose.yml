@@ -1,0 +1,18 @@
+version: '3'
+services:
+  api-test:
+    image: apitest
+    network_mode: host
+    depends_on:
+      - booktour
+    # run the api tests
+    environment:
+      WAIT_HOSTS: booktour:8080
+    command: mvn clean install
+  booktour:
+    image: booktour-image
+    # bind the ports
+    ports:
+        - 8080:8080
+    # run the api
+    command: mvn spring-boot:run
