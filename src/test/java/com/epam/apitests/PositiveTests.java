@@ -1,9 +1,10 @@
 package com.epam.apitests;
 
+import model.TourPackage;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,13 +18,13 @@ import static org.hamcrest.Matchers.*;
 public class PositiveTests {
 
     @ParameterizedTest
-    @ValueSource(strings = {"Backpack Cal", "California Calm", "California Hot springs", "Cycle California", "From Desert to Sea", "Kids California", "Nature Watch", "Snowboard Cali", "Taste of California"})
-    public void getAllTourPackages(String packageName) {
+    @EnumSource(TourPackage.class)
+    public void getAllTourPackages(TourPackage tourPackage) {
         given()
                 .when()
                 .get("/packages")
                 .then().log().ifError()
-                .body("_embedded.packages.name", hasItems(packageName)).statusCode(200);
+                .body("_embedded.packages.name", hasItems(tourPackage.getLabel())).statusCode(200);
     }
 
     @Test

@@ -1,7 +1,7 @@
 version: '3'
 services:
   api-test:
-    image: apitest
+    image: api-tests-set
     network_mode: host
     depends_on:
       - booktour
